@@ -44,6 +44,14 @@ func (c *Coordinator) GetStatus(id int) (task.Status, error) {
 	return t.Status, nil
 }
 
+func (c *Coordinator) GetAll() ([]*task.Task, error) {
+	ret := []*task.Task{}
+	for _,m := range c.Tasks {
+		ret = append(ret, m)
+	}
+	return ret, nil
+}
+
 func (c *Coordinator) NextTask() (*task.Task, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()

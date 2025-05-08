@@ -24,6 +24,7 @@ func New(c *coordinator.Coordinator) *Api {
 func (api *Api) HandleRequests() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/task", api.SubmitTask).Methods("POST")
+	r.HandleFunc("/api/v1/task", api.GetAllTasksStatus).Methods("GET")
 	r.HandleFunc("/api/v1/task/{id}", api.GetTaskStatus).Methods("GET")
 	return r
 }
@@ -45,4 +46,9 @@ func (api *Api) GetTaskStatus(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(vars["id"])
 	status, _ := api.Coordinator.GetStatus(id)
 	json.NewEncoder(w).Encode(status)
+}
+
+func (api *Api) GetAllTasksStatus(w http.ResponseWriter, r *http.Request) {
+	res, _ := api.Coordinator.GetAll()
+	json.NewEncoder(w).Encode(res)
 }
