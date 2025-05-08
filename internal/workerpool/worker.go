@@ -16,5 +16,6 @@ func (w *Worker) Process(tc chan *task.Task) {
 		t.Status = task.Running
 		time.Sleep(10 * time.Second)
 		t.Status = task.Success
+		fmt.Printf("Worker %d is done processing task ID: %d\n", w.Id, t.Id)
 	}
 }

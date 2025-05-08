@@ -26,6 +26,7 @@ func (c *Coordinator) Add(t *task.Task) {
 	c.mu.Lock()
 	defer c.mu.Unlock() 
 	
+	fmt.Printf("Adding new task with Id: %d\n", t.Id)
 	t.Id = c.NumElems
 	t.Status = task.Pending
 	c.Queue = append(c.Queue, t)

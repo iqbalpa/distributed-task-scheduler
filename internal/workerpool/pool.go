@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"fmt"
 	"main/cmd/coordinator"
 	"main/internal/task"
 	"time"
@@ -19,6 +20,7 @@ func New(size int) *WorkerPool {
 }
 
 func (p *WorkerPool) Start(c *coordinator.Coordinator) {
+	fmt.Println("Worker pool started!")
 	for i := range p.Size {
 		w := Worker{Id: i}
 		go w.Process(p.TaskChan)
@@ -28,6 +30,7 @@ func (p *WorkerPool) Start(c *coordinator.Coordinator) {
 
 func (p *WorkerPool) Dispatch(c *coordinator.Coordinator, tc chan *task.Task) {
 	for {
+		fmt.Println("Retrieving new task from queue...")
 		t, err := c.NextTask()
 		if err != nil {
 			time.Sleep(1 * time.Second)
