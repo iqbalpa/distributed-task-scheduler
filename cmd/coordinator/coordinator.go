@@ -13,11 +13,13 @@ type Coordinator struct {
 	NumElems int
 }
 
-func (c *Coordinator) Init() {
-	c.Queue = []*task.Task{}
-	c.NumElems = 0
-	c.Tasks = make(map[int]*task.Task)
-	c.mu = sync.Mutex{}
+func New() *Coordinator {
+	return &Coordinator{
+		mu: sync.Mutex{},
+		Queue: []*task.Task{},
+		Tasks: make(map[int]*task.Task),
+		NumElems: 0,
+	}
 }
 
 func (c *Coordinator) Add(t *task.Task) {

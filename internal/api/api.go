@@ -12,11 +12,13 @@ import (
 )
 
 type Api struct {
-	Coordinator coordinator.Coordinator
+	Coordinator *coordinator.Coordinator
 }
 
-func (api *Api) Init() {
-	api.Coordinator.Init()
+func New(c *coordinator.Coordinator) *Api {
+	return &Api{
+		Coordinator: c,
+	}
 }
 
 func (api *Api) HandleRequests() *mux.Router {
